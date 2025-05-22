@@ -23,18 +23,22 @@ function App() {
 
 	const addTodo = () => {
 		if (!todoName.trim()) return;
-		setTodos([...todos, { text: todoName, done: false }]);
+		setTodos([
+			...todos,
+			{ text: todoName, done: false, id: crypto.randomUUID() },
+		]);
 		setTodoName("");
 	};
 
-	const removeTodo = (index) => {
-		const updated = todos.filter((_, i) => i != index);
+	const removeTodo = (id) => {
+		const updated = todos.filter((todoObj) => todoObj.id !== id);
 		setTodos(updated);
 	};
 
-	const statusToggle = (index) => {
+	const statusToggle = (id) => {
 		const updated = [...todos];
-		updated[index].done = !updated[index].done;
+		const todo = updated.find((todoObj) => todoObj.id === id);
+		todo.done = !todo.done;
 		setTodos(updated);
 	};
 	return (
@@ -52,15 +56,17 @@ function App() {
 				</button>
 			</form>
 			<ul>
-				{todos.map((todo, i) => (
-					<li key={i}>
+				{todos.map(({ text, done, id }) => (
+					<li key={id}>
 						<input
 							type="checkbox"
-							onChange={() => statusToggle(i)}
-							checked={todo.done}
+							onChange={() => statusToggle(id)}
+							checked={done}
 						/>
-						<span>{todo.text}</span>
-						<button onClick={() => removeTodo(i)}>Delete Todo</button>
+						<span>{text}</span>
+						<button type="button" onClick={() => removeTodo(id)}>
+							Delete Todo
+						</button>
 					</li>
 				))}
 			</ul>
