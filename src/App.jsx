@@ -40,12 +40,17 @@ function App() {
 	return (
 		<>
 			<h1>Todo</h1>
-			<input
-				value={todoName}
-				onInput={(e) => setTodoName(e.target.value)}
-				placeholder="New todo"
-			/>
-			<button onClick={addTodo}>Add Todo</button>
+			<form onSubmit={(e) => e.preventDefault()}>
+				<input
+					value={todoName}
+					onInput={(e) => setTodoName(e.target.value)}
+					placeholder="New todo"
+					name="New todo"
+				/>
+				<button type="submit" onClick={addTodo}>
+					Add Todo
+				</button>
+			</form>
 			<ul>
 				{todos.map((todo, i) => (
 					<li key={i}>
