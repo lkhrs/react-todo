@@ -19,7 +19,7 @@ function App() {
 	// Save todos to localStorage after render
 	useEffect(() => {
 		localStorage.setItem("todos", JSON.stringify(todos));
-	}, [todos, setTodos]);
+	}, [todos]);
 
 	const addTodo = () => {
 		if (!todoName.trim()) return;
